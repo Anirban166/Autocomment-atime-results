@@ -36,6 +36,6 @@ jobs:
       env: 
         repo_token: ${{ secrets.GITHUB_TOKEN }} 
       run: |
-        R -e 'source("plotScript.R")'
+        R -e 'source("plotScript.r")'
         echo "![plot](./plot.png)" >> report.md
         cml comment create report.md
