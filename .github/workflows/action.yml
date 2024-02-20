@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/iterative/cml:0-dvc2-base1
 
-steps:
+    steps:
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -36,7 +36,6 @@ steps:
       env: 
         repo_token: ${{ secrets.GITHUB_TOKEN }} 
       run: |
-        # Change the R code below in a pull request to see the resultant plot you want as a comment in the PR thread:
-        Rscript -e 'library(ggplot2); ggplot(diamonds) + geom_point(aes(x = carat, y = price, color = cut)) + geom_smooth(aes(x = carat, y = price, color = cut)); ggsave(filename = 'plot.png', plot = last_plot())'
+        R -e 'source("plotScript.r")'
         echo "![plot](./plot.png)" >> report.md
         cml comment create report.md
