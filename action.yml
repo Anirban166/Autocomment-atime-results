@@ -25,8 +25,13 @@ runs:
     # To ensure local branch references exist and can be found when using git2r::revparse_single: (for more information, please check https://github.com/Anirban166/Autocomment-atime-results/issues/33#issuecomment-2038431272 and the comments below that)
     - name: Retrieve branch references
       run: |
-        git switch "${GITHUB_BASE_REF}"
-        git switch "${GITHUB_HEAD_REF}"
+        if [ -n "${GITHUB_HEAD_REF}" ]; then
+          git fetch origin "${GITHUB_HEAD_REF}:${GITHUB_HEAD_REF}" || echo "Failed to fetch branch ${GITHUB_HEAD_REF}"
+          git switch "${GITHUB_HEAD_REF}"
+        else
+          echo "Using default branch as fallback"
+          git switch "${GITHUB_BASE_REF}"
+        fi
       shell: bash
 
     - name: R Setup
